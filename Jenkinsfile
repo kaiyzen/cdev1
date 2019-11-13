@@ -28,8 +28,15 @@ pipeline {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def newImage = docker.build("nemfoundation/test1:latest")
                     newImage.push()
+                    def commitSha = ''
+                    dir('catauplt-rest') {
+                      commitSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                    }
+                    newImage.tag('nemfoundation/test1:commit-${commitSha}')
+                    newImage.push()
                   }
                 }
+                sh 'echo "--------Finished building tagging and pushing new versions------------"'
             }
         }
     }
