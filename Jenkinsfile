@@ -1,4 +1,4 @@
-restSha = ''
+def restSha = ''
 
 pipeline {
     agent { node { label 'docker-rest' } }
@@ -16,7 +16,9 @@ pipeline {
                 dir('catapult-rest') {
                   sh 'git fetch origin release'
                   sh 'git checkout release'
-                  restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                  script {
+		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+		  }
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
                   //sh 'git pull --rebase upstream master'
                 }
