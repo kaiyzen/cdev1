@@ -24,8 +24,10 @@ pipeline {
         stage('build docker image') {
             steps {
                 sh 'echo "----Building Docker Container------"'
-                docker.withRegistry("","jenkins-docker-token-01") {
-                  def newImage = docker.build("nemfoundation/test1:latest")
+                node {
+                  docker.withRegistry("","jenkins-docker-token-01") {
+                    def newImage = docker.build("nemfoundation/test1:latest")
+                  }
                 }
             }
         }
