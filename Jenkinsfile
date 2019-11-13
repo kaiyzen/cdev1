@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('setup repos') {
             steps {
+                sh 'rm -rf catapult-rest'
                 sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
                 sh 'cd catapult-rest'
                 sh 'pwd'
@@ -16,6 +17,7 @@ pipeline {
                 sh 'git checkout release'
                 sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
                 sh 'git pull --rebase upstream master'
+                sh 'cd ..'
                 sh 'echo "----Finished with setup of repos----"'
             }
         }
