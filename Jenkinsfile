@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('setup repos') {
             steps {
-                sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git
+                sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
                 sh 'cd catapult-rest'
                 sh 'git fetch origin release && git checkout release'
                 sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
