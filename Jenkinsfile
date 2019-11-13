@@ -27,6 +27,7 @@ pipeline {
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def newImage = docker.build("nemfoundation/test1:latest")
+                    newImage.push()
                   }
                 }
             }
