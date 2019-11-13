@@ -1,3 +1,5 @@
+restSha = ''
+
 pipeline {
     agent { node { label 'docker-rest' } }
     triggers {
@@ -14,10 +16,12 @@ pipeline {
                 dir('catapult-rest') {
                   sh 'git fetch origin release'
                   sh 'git checkout release'
+                  restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
                   //sh 'git pull --rebase upstream master'
                 }
                 sh 'pwd'
+                sh 'echo "end of repo steps sha : ${restSha}"'
                 sh 'echo "----Finished with setup of repos----"'
             }
         }
@@ -30,11 +34,9 @@ pipeline {
                     //newImage.push()
                     commitSha = ''
                     dir('catauplt-rest') {
-                      commitSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-                      sh 'echo "testing sha inline: ${commitSha}"'
-                      sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                      sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
-                    sh 'echo "Testing the sha value:${commitSha}"'
+                    sh 'echo "Testing the sha value:${restSha}"'
                     //newImage.tag("nemfoundation/test1:commit-${commitSha}")
                     //newImage.push()
                   }
