@@ -1,4 +1,5 @@
-def restSha = ''
+restSha = ''
+def awesomeVersion = 'UNKNOWN'
 
 pipeline {
     agent { node { label 'docker-rest' } }
@@ -18,6 +19,7 @@ pipeline {
                   sh 'git checkout release'
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                    awesomeVersion = sh(returnStdout: true, script: 'echo 0.0.1')
 		  }
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
                   //sh 'git pull --rebase upstream master'
@@ -29,6 +31,7 @@ pipeline {
         }
         stage('build docker image') {
             steps {
+                echo "awesomeVersion: ${awesomeVersion}"
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
@@ -42,6 +45,7 @@ pipeline {
                     //newImage.tag("nemfoundation/test1:commit-${commitSha}")
                     //newImage.push()
                   }
+                  echo "awesomeVersion: ${awesomeVersion}"
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
             }
