@@ -1,7 +1,7 @@
 pipeline {
     agent { node { label 'docker-rest' } }
     triggers {
-        cron('H/5 * * * *')
+        pollSCM('H/5 * * * *')
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '3'))
