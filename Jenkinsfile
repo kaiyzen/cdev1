@@ -31,9 +31,11 @@ pipeline {
                     commitSha = ''
                     dir('catauplt-rest') {
                       commitSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                      sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                      sh "git log -n 1 --pretty=format:'%h'"
                     }
                     sh 'echo "Testing the sha value:${commitSha}"'
-                    //newImage.tag('nemfoundation/test1:commit-${commitSha}')
+                    //newImage.tag("nemfoundation/test1:commit-${commitSha}")
                     //newImage.push()
                   }
                 }
