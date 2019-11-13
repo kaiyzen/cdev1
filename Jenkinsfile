@@ -1,4 +1,4 @@
-restSha = ''
+def restSha = 'UNKOWN'
 def awesomeVersion = 'UNKNOWN'
 
 pipeline {
@@ -18,7 +18,7 @@ pipeline {
                   sh 'git fetch origin release'
                   sh 'git checkout release'
                   script {
-		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
                     awesomeVersion = sh(returnStdout: true, script: 'echo 0.0.1')
 		  }
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
@@ -32,6 +32,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 echo "awesomeVersion: ${awesomeVersion}"
+                echo "restSha: ${restSha}"
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
@@ -46,6 +47,7 @@ pipeline {
                     //newImage.push()
                   }
                   echo "awesomeVersion: ${awesomeVersion}"
+                  echo "restSha: ${restSha}"
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
             }
