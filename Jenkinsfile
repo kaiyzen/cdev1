@@ -43,7 +43,7 @@ pipeline {
                       sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
-                    newImage.tag("nemfoundation/test1:commit-${restSha}")
+                    newImage.tag("commit-${restSha}")
                     newImage.push()
                   }
                   echo "awesomeVersion: ${awesomeVersion}"
