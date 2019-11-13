@@ -36,15 +36,15 @@ pipeline {
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
-                    //def newImage = docker.build("nemfoundation/test1:latest")
-                    //newImage.push()
+                    def newImage = docker.build("nemfoundation/test1:latest")
+                    newImage.push()
                     commitSha = ''
                     dir('catauplt-rest') {
                       sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
-                    //newImage.tag("nemfoundation/test1:commit-${commitSha}")
-                    //newImage.push()
+                    newImage.tag("nemfoundation/test1:commit-${restSha}")
+                    newImage.push()
                   }
                   echo "awesomeVersion: ${awesomeVersion}"
                   echo "restSha: ${restSha}"
