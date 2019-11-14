@@ -4,7 +4,7 @@ def awesomeVersion = 'UNKNOWN'
 pipeline {
     agent { node { label 'docker-rest' } }
     triggers {
-        pollSCM('H/5 * * * *')
+        pollSCM('H/10 * * * *')
         upstream(upstreamProjects: 'trigger-rest-fork-01', threshold: hudson.model.Result.SUCCESS)
     }
     options {
