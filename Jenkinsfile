@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('setup repos') {
             steps {
-                sh 'rm -rf catapult-rest'
+                //sh 'rm -rf catapult-rest'
                 sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
                 dir('catapult-rest') {
                   sh 'git fetch origin release'
