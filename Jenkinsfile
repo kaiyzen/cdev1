@@ -1,5 +1,4 @@
 def restSha = 'UNKOWN'
-def awesomeVersion = 'UNKNOWN'
 
 pipeline {
     agent { node { label 'docker-rest' } }
@@ -20,20 +19,15 @@ pipeline {
                   sh 'git checkout release'
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
-                    awesomeVersion = sh(returnStdout: true, script: 'echo 0.0.1')
 		  }
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
                   //sh 'git pull --rebase upstream master'
                 }
-                sh 'pwd'
-                sh 'echo "end of repo steps sha : ${restSha}"'
                 sh 'echo "----Finished with setup of repos----"'
             }
         }
         stage('build docker image') {
             steps {
-                echo "awesomeVersion: ${awesomeVersion}"
-                echo "restSha: ${restSha}"
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
@@ -44,13 +38,19 @@ pipeline {
                       sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
-                    newImage.push("commit-${restSha}")
+                    //newImage.push("commit-${restSha}")
+                    newImage.push("foooooooo/bararrrrrrr/basssssssss/commit-${restSha}")
                   }
-                  echo "awesomeVersion: ${awesomeVersion}"
-                  echo "restSha: ${restSha}"
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
             }
         }
+    }
+    post {
+      failure {
+        mail to: 'nate@nem.foundation',
+        subject: "Catapult Rest Build Failed: ${currentBuild.fullDisplayName}",
+        body: "Error with build attempt: ${env.BUILD_URL}"
+      }
     }
 }
