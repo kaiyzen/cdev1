@@ -16,6 +16,7 @@ pipeline {
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def dImg = docker.pull("rpelavin/update-digests")
+                    sh 'echo "Testing the sha value:${restSha}"'
                   }
                 }
             }
