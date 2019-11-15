@@ -10,6 +10,17 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '3'))
     }
     stages {
+        stage('run digest update') {
+            steps {
+                sh 'echo "--------Pulling Image to Update Container Digest-------"'
+                script {
+                  docker.withRegistry("","jenkins-docker-token-01") {
+                    docker.image("rpelavin/update-digests").run {
+                    }
+                  }
+                }
+            }
+        }
         stage('setup repos') {
             steps {
                 //sh 'rm -rf catapult-rest'
