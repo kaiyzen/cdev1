@@ -16,7 +16,7 @@ pipeline {
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def dImg = docker.image("rpelavin/update-digests")
-                    dImg.run()
+                    dImg.run("-v /home/ubuntu/jenkins/docker/auto-update-cfg.yaml:/usr/share/auto-update/config.yaml")
                     sh 'echo "Ran docker digest update test..."'
                   }
                 }
