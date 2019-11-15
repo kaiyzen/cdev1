@@ -22,7 +22,7 @@ pipeline {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
-                  sh 'git pull --rebase upstream task/193-update-schemas-fushicho2'
+                  //sh 'git pull --rebase upstream task/193-update-schemas-fushicho2'
                 }
                 sh 'echo "----Finished with setup of repos----"'
             }
