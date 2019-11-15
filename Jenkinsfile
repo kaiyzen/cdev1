@@ -15,8 +15,7 @@ pipeline {
                 sh 'echo "--------Pulling Image to Update Container Digest-------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
-                    docker.image("rpelavin/update-digests").run() {
-                    }
+                    def dImg = docker.pull("rpelavin/update-digests")
                   }
                 }
             }
