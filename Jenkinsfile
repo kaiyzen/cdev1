@@ -48,7 +48,7 @@ pipeline {
     }
     post {
       failure {
-        mail to: 'nate@nem.foundation',
+        mail to: 'daminate@gmail.com,nate@nem.foundation',
         subject: "Catapult Rest Build Failed: ${currentBuild.fullDisplayName}",
         body: "Error with build attempt: ${env.BUILD_URL}"
       }
