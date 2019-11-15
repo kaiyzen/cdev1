@@ -38,8 +38,8 @@ pipeline {
                       sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
-                    //newImage.push("commit-${restSha}")
-                    newImage.push("foooooooo/bararrrrrrr/basssssssss/commit-${restSha}")
+                    newImage.push("commit-${restSha}")
+                    //newImage.push("foooooooo/bararrrrrrr/basssssssss/commit-${restSha}")
                   }
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
