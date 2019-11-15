@@ -51,7 +51,7 @@ pipeline {
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def dImg = docker.image("rpelavin/update-digests")
-                    dImg.run("-v /home/ubuntu/jenkins/docker/catapult-rest-f2-edge.yaml:/usr/share/auto-update/config.yaml")
+                    dImg.run("-v /home/ubuntu/jenkins/docker/f2-compat-auto-update-cfg.yaml:/usr/share/auto-update/config.yaml")
                     sh 'echo "Ran docker digest update test..."'
                   }
                 }
