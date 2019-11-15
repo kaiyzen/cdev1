@@ -32,7 +32,7 @@ pipeline {
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
-                    def newImage = docker.build("nemfoundation/test1")
+                    def newImage = docker.build("nemfoundation/catapult-rest-f2-edge")
                     newImage.push("latest")
                     commitSha = ''
                     dir('catauplt-rest') {
@@ -40,7 +40,6 @@ pipeline {
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
                     newImage.push("commit-${restSha}")
-                    //newImage.push("foooooooo/bararrrrrrr/basssssssss/commit-${restSha}")
                   }
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
@@ -52,7 +51,7 @@ pipeline {
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def dImg = docker.image("rpelavin/update-digests")
-                    dImg.run("-v /home/ubuntu/jenkins/docker/auto-update-cfg.yaml:/usr/share/auto-update/config.yaml")
+                    dImg.run("-v /home/ubuntu/jenkins/docker/catapult-rest-f2-edge.yaml:/usr/share/auto-update/config.yaml")
                     sh 'echo "Ran docker digest update test..."'
                   }
                 }
