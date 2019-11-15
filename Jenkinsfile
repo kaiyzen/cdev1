@@ -4,7 +4,7 @@ pipeline {
     agent { node { label 'docker-rest' } }
     triggers {
         pollSCM('H/5 * * * *')
-        upstream(upstreamProjects: 'trigger-rest-fork-01,trigger-rest-fork-02', threshold: hudson.model.Result.SUCCESS)
+//        upstream(upstreamProjects: 'trigger-rest-fork-01,trigger-rest-fork-02', threshold: hudson.model.Result.SUCCESS)
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '3'))
