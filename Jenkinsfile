@@ -30,6 +30,8 @@ pipeline {
         stage('build docker image') {
             steps {
                 sh 'echo "----Building Docker Container------"'
+                sh 'cp overrides/sha3Hasher.js catapult-rest/catapult-sdk/src/crypto/sha3Hasher.js'
+                sh 'cp overrides/address.js catapult-rest/catapult-sdk/src/model/address.js'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def newImage = docker.build("nemfoundation/catapult-rest-f2-edge")
