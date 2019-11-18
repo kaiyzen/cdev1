@@ -13,16 +13,16 @@ pipeline {
         stage('setup repos') {
             steps {
                 sh 'rm -rf catapult-rest'
-                //sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
-                sh 'git clone https://github.com/kaiyzen/catapult-rest.git'
+                sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
+                //sh 'git clone https://github.com/kaiyzen/catapult-rest.git'
                 dir('catapult-rest') {
-                  sh 'git fetch origin release-rbf2'
-                  sh 'git checkout release-rbf2'
+                  sh 'git fetch origin release'
+                  sh 'git checkout release'
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
-                  //sh 'git pull --rebase upstream task/193-update-schemas-fushicho2'
+                  sh 'git pull --rebase upstream task/198-update-db-models-f2'
                 }
                 sh 'echo "----Finished with setup of repos----"'
             }
