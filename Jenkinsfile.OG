@@ -30,6 +30,8 @@ pipeline {
         stage('build docker image') {
             steps {
                 sh 'echo "----Building Docker Container------"'
+                sh 'cp overrides/sha3Hasher.js catapult-rest/catapult-sdk/src/crypto/sha3Hasher.js'
+                sh 'cp overrides/address.js catapult-rest/catapult-sdk/src/model/address.js'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
                     def newImage = docker.build("nemfoundation/catapult-rest-f2-edge")
@@ -48,13 +50,13 @@ pipeline {
         stage('run digest update') {
             steps {
                 sh 'echo "--------Pulling Image to Update Container Digest-------"'
-                //script {
-                //  docker.withRegistry("","jenkins-docker-token-01") {
-                //    def dImg = docker.image("rpelavin/update-digests")
-                //    dImg.run("-v /home/ubuntu/jenkins/docker/f2-compat-auto-update-cfg.yaml:/usr/share/auto-update/config.yaml")
-                //    sh 'echo "Ran docker digest update test..."'
-                //  }
-                //}
+                script {
+                  docker.withRegistry("","jenkins-docker-token-01") {
+                    def dImg = docker.image("rpelavin/update-digests")
+                    dImg.run("-v /home/ubuntu/jenkins/docker/f2-compat-auto-update-cfg.yaml:/usr/share/auto-update/config.yaml")
+                    sh 'echo "Ran docker digest update test..."'
+                  }
+                }
             }
         }
     }
