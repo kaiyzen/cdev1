@@ -18,11 +18,11 @@ pipeline {
                 dir('catapult-rest') {
                   sh 'git fetch origin release'
                   sh 'git checkout release'
+                  sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
+                  sh 'git pull --rebase upstream master'
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
-                  sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
-                  sh 'git pull --rebase upstream master'
                 }
                 sh 'echo "----Finished with setup of repos----"'
             }
