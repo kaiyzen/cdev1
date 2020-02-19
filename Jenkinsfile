@@ -32,7 +32,7 @@ pipeline {
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
-                    def newImage = docker.build("nemfoundation/catapult-rest-f2-edge")
+                    def newImage = docker.build("nemfoundation/symbol-rest-beta")
                     newImage.push("latest")
                     commitSha = ''
                     dir('catauplt-rest') {
