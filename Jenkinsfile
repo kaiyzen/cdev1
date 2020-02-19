@@ -13,11 +13,11 @@ pipeline {
         stage('setup repos') {
             steps {
                 sh 'rm -rf catapult-rest'
-                sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
-                //sh 'git clone https://github.com/kaiyzen/catapult-rest.git'
+                //sh 'git clone https://github.com/Alexhuszagh/catapult-rest.git'
+                sh 'git clone https://github.com/kaiyzen/catapult-rest.git'
                 dir('catapult-rest') {
-                  sh 'git fetch origin release'
-                  sh 'git checkout release'
+                  //sh 'git fetch origin release'
+                  //sh 'git checkout release'
                   sh 'git remote add upstream https://github.com/nemtech/catapult-rest.git'
                   sh 'git pull --rebase upstream master'
                   script {
