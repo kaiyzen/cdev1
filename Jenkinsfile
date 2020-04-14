@@ -40,25 +40,6 @@ pipeline {
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
             }
         }
-        stage('build keccak docker image') {
-            steps {
-                sh 'echo "----Building Docker Container------"'
-                sh 'cp overrides/sha3Hasher.js catapult-rest/catapult-sdk/src/crypto/sha3Hasher.js'
-                sh 'cp overrides/address.js catapult-rest/catapult-sdk/src/model/address.js'
-                script {
-                  docker.withRegistry("","jenkins-docker-token-01") {
-                    def newImage = docker.build("techbureau/catapult-rest-server-nightly")
-                    commitSha = ''
-                    dir('catauplt-rest') {
-                      sh 'echo "inside script/dir testing sha inline: ${restSha}"'
-                    }
-                    sh 'echo "Testing the sha value:${restSha}"'
-                    newImage.push("commit-keccak-${restSha}")
-                  }
-                }
-                sh 'echo "--------Finished building tagging and pushing new versions------------"'
-            }
-        }
     }
     post {
       failure {
