@@ -14,9 +14,9 @@ pipeline {
             steps {
                 sh 'rm -rf catapult-rest'
                 sh 'git clone https://github.com/nemtech/catapult-rest.git'
-                sh 'git fetch origin task/T172-refactor-pagination-and-transactions'
-                sh 'git checkout task/T172-refactor-pagination-and-transactions'
                 dir('catapult-rest') {
+                  sh 'git fetch origin task/T172-refactor-pagination-and-transactions'
+                  sh 'git checkout task/T172-refactor-pagination-and-transactions'
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
