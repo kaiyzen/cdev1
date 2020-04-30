@@ -14,12 +14,14 @@ pipeline {
             steps {
                 sh 'rm -rf catapult-rest'
                 sh 'git clone https://github.com/nemtech/catapult-rest.git'
+                sh 'git fetch origin task/T172-refactor-pagination-and-transactions'
+                sh 'git checkout task/T172-refactor-pagination-and-transactions'
                 dir('catapult-rest') {
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
                 }
-                sh 'echo "----Finished with setup of repos----"'
+                sh 'echo "----Finished with setup of repo----"'
             }
         }
         stage('build docker image') {
@@ -27,14 +29,14 @@ pipeline {
                 sh 'echo "----Building Docker Container------"'
                 script {
                   docker.withRegistry("","jenkins-docker-token-01") {
-                    def newImage = docker.build("techbureau/catapult-rest-server-nightly")
+                    def newImage = docker.build("nemfoundation/symbol-rest-beta")
                     newImage.push("latest")
                     commitSha = ''
                     dir('catauplt-rest') {
                       sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
-                    newImage.push("commit-${restSha}")
+                    newImage.push("task-172-commit-${restSha}")
                   }
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
