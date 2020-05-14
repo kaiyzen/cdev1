@@ -15,8 +15,8 @@ pipeline {
                 sh 'rm -rf catapult-rest'
                 sh 'git clone https://github.com/nemtech/catapult-rest.git'
                 dir('catapult-rest') {
-                  sh 'git fetch origin task/T172-refactor-pagination-and-transactions'
-                  sh 'git checkout task/T172-refactor-pagination-and-transactions'
+                  sh 'git fetch origin task/vrf-lock'
+                  sh 'git checkout task/vrf-lock'
                   script {
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
@@ -36,7 +36,7 @@ pipeline {
                       sh 'echo "inside script/dir testing sha inline: ${restSha}"'
                     }
                     sh 'echo "Testing the sha value:${restSha}"'
-                    newImage.push("task-172-commit-${restSha}")
+                    newImage.push("951-target-commit-${restSha}")
                   }
                 }
                 sh 'echo "--------Finished building tagging and pushing new versions------------"'
