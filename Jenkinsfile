@@ -16,8 +16,8 @@ pipeline {
                 sh 'git clone https://github.com/nemtech/catapult-rest.git'
                 dir('catapult-rest') {
                   script {
-	            sh 'git fetch origin task/vrf-lock'
-		    sh 'git checkout task/vrf-lock'
+	            // sh 'git fetch origin task/vrf-lock'
+		    // sh 'git checkout task/vrf-lock'
 		    restSha = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'")
 		  }
                 }
